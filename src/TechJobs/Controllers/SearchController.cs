@@ -29,18 +29,26 @@ namespace TechJobs.Controllers
 
             ViewBag.columns = ListController.columnChoices;
             ViewBag.title = "Search";
+
             List<Dictionary<string, string>> jobList = new List<Dictionary<string, string>>();
 
+            if (searchType.Equals("all") || searchTerm.Length == 0)
+            {
+                jobList = JobData.FindAll();
+                ViewBag.jobs = jobList;
+                return View("Index");
+            }
             if (searchType.Equals("all"))
             {
                 jobList = JobData.FindByValue(searchTerm);
-                ViewBag.jobs = jobList;
-                return View("search");
+            }
+            else
+            {
+                jobList = JobData.FindByColumnAndValue(searchType, searchTerm);
             }
 
-            jobList = JobData.FindByColumnAndValue(searchType, searchTerm);
             ViewBag.jobs = jobList;
-            return View("search");
+            return View("Index");
         }
 
     }
