@@ -45,6 +45,10 @@ namespace TechJobs.Controllers
             }
             else
             {
+                if (searchTerm == null)
+                {
+                    searchTerm = "";
+                }
                 jobList = JobData.FindByColumnAndValue(searchType, searchTerm);
             }
 
