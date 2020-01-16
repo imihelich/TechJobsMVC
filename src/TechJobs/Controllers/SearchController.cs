@@ -32,15 +32,16 @@ namespace TechJobs.Controllers
 
             List<Dictionary<string, string>> jobList = new List<Dictionary<string, string>>();
 
-            if (searchType.Equals("all") || searchTerm.Length == 0)
-            {
-                jobList = JobData.FindAll();
-                ViewBag.jobs = jobList;
-                return View("Index");
-            }
             if (searchType.Equals("all"))
             {
-                jobList = JobData.FindByValue(searchTerm);
+                if (searchTerm == null)
+                {
+                    jobList = JobData.FindAll();
+                }
+                else
+                {
+                    jobList = JobData.FindByValue(searchTerm);
+                }
             }
             else
             {
